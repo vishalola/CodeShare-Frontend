@@ -1,19 +1,27 @@
 import { useRef } from "react"
-export default function PasteOption()
+export default function PasteOption(props)
 {
     const passCheck=useRef(null);
     const passLabel=useRef(null);
-    /* 
-        Options:
-            Title
-            Language
-            Password
-
-    
-    */
+    let handleSubmit=(e)=>{
+        e.preventDefault();
+        let title=e.target[0].value;
+        let language=e.target[1].value;
+        let password=e.target[2].value;
+        let passCheck=e.target[3].checked;
+        console.log(props.code.current.value);
+        if(passCheck)
+        {
+            console.log("locked");
+        }
+        else
+        {
+            console.log("unlocked");
+        }
+    }
     return (
         <div className="inline-block m-4 md:flex md:flex-col lg:w-fit justify-center items-center border-[.1px] rounded-sm border-[#646464] text-white">
-            <form className="outlin my-3 flex flex-col">
+            <form className="outlin my-3 flex flex-col" onSubmit={handleSubmit}>
             <div className="outlin px-4 my-2 text-2xl">Paste Options</div>
                 <div className="m-3 inline-block">
                         <label className="outlin w-[70px] inline-block mx-2 text-sm">
@@ -46,7 +54,6 @@ export default function PasteOption()
                                 passCheck.current.classList.add("bg-inherit")
                                 passLabel.current.classList.add("text-green-500")
                                 passLabel.current.textContent="Enabled"
-                                console.log(passCheck.current.classList)
                             }
                             else
                             {
@@ -55,8 +62,6 @@ export default function PasteOption()
                                 passCheck.current.classList.add("cursor-not-allowed")
                                 passCheck.current.classList.remove("bg-inherit")
                                 passLabel.current.textContent="Disabled"
-
-
                             }
                         }} 
                         />
