@@ -25,7 +25,7 @@ export default function CodeEditor(props){
     return (
         <div className="m-4 min-w-[50%] min-h-[100px] border-[.1px] border-[#646464] h-fit text-sm rounded-lg overflow-clip bg-[#272822]">
             <div className="text-white border-b-[#646464] border-b-[.1px] px-6 py-1 text-xl flex justify-between">
-                <div>PasteBin</div>
+                <div>{props.title}</div>
                 <div className="hover:outline px-2 outline-[1px] outline-gray-500 select-none cursor-pointer rounded-sm text-base flex justify-center items-center"
                 onClick={(e)=>{
                     if(navigator.clipboard && navigator.clipboard.writeText)

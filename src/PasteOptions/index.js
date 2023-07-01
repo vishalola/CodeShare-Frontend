@@ -1,6 +1,9 @@
 import { useRef } from "react"
+import axios from "axios";
+import { useNavigate } from "react-router";
 export default function PasteOption(props)
 {
+    const navigate=useNavigate();
     const passCheck=useRef(null);
     const passLabel=useRef(null);
     let handleSubmit=(e)=>{
@@ -12,11 +15,19 @@ export default function PasteOption(props)
         console.log(props.code.current.value);
         if(passCheck)
         {
-            console.log("locked");
+            let data={"title":title,"language":language,"password":password,"isPublic":0,"code":props.code.current.value};
+            axios.post("https://codeshare-d6ar.onrender.com/",data).then((res)=>{
+                let body=res.data;
+                navigate(`/${body.link}`)
+            }).catch((e)=>console.log(e))
         }
         else
         {
-            console.log("unlocked");
+            let data={"title":title,"language":language,"isPublic":1,"code":props.code.current.value};
+            axios.post("https://codeshare-d6ar.onrender.com/",data).then((res)=>{
+                let body=res.data;
+                navigate(`/${body.link}`)
+            }).catch((e)=>console.log(e))
         }
     }
     return (
