@@ -1,7 +1,10 @@
-.App {
-  text-align: center;
+.App{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline:1px solid red;
+  height: 100vh;
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
