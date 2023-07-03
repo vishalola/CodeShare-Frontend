@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useEffect,useState } from "react"
 import PublicItem from "../components/publicitems"
+import Loader from '../components/loader'
 export default function PublicPaste(){
     const [items,setItems]=useState([]);
+    const [loading,setLoading]=useState(true);
     useEffect(()=>{
         axios.get(`https://codeshare-d6ar.onrender.com/`).then(res=>{
+            setLoading(false);
             let data=res.data;
             for(let i=0;i<data.length;i++)
             {
@@ -14,11 +17,12 @@ export default function PublicPaste(){
     },[])
     return (
         <div className="text-white border-[.1px] rounded-sm border-[#646464]
-        m-4 p-2 overflow-scroll h-[300px] 
+        m-4 p-2 overflow-scroll h-[300px] min-w-[200px] 
         ">
             {/* <PublicItem title="Pavitra's Paste" language="javascript" date="25-March-2023"/>
             <PublicItem title="Trial 01" language="javascript" date="25-March-2023"/> */}
-            {items}
+            {loading && <Loader/>}
+            {!loading && items}
         </div>
     )
 }

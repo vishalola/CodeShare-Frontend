@@ -45,10 +45,14 @@ export default function PasteOption(props)
                             Language
                         </label>
                         <select className="rounded-sm text-sm py-2 px-2 bg-inherit outline-none border-[.1px] border-[#646464]" name="language">
+                            <option value="auto">auto</option>
                             <option value="cpp">cpp</option>
                             <option value="c">c</option>
-                            <option value="javascript">javascript</option>
-                            <option value="python">python</option>
+                            <option value="HTML">HTML</option>
+                            <option value="CSS">CSS</option>
+                            <option value="PHP">PHP</option>
+                            <option value="JavaScript">JavaScript</option>
+                            <option value="Python">Python</option>
                         </select>
                 </div>
                 <div className="m-3 w-fit flex justify-center items-center outlin ">
