@@ -19,8 +19,6 @@ export default function PublicPaste(){
         <div className="text-white border-[.1px] rounded-sm border-[#646464]
         m-4 p-2 overflow-scroll h-[300px] min-w-[200px] 
         ">
-            {/* <PublicItem title="Pavitra's Paste" language="javascript" date="25-March-2023"/>
-            <PublicItem title="Trial 01" language="javascript" date="25-March-2023"/> */}
             {loading && <Loader/>}
             {!loading && items}
         </div>

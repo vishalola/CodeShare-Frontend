@@ -63,7 +63,7 @@ export default function PublicLink()
     if(loading)
     {
         return (
-            <div className="rounded-sm mt-10 m-4 p-3 px-6 w-fit ml-auto mr-auto bg-[#363735] md:ml-4 md:mr-4">
+            <div className="rounded-sm mt-10 m-4 p-3 px-6 w-fit ml-auto mr-auto bg-[#363735]">
                 <Loader/>
             </div>
         )

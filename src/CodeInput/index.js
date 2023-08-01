@@ -3,7 +3,7 @@ export default function CodeInput(props){
         e.target.style.height=`${e.target.scrollHeight}px`
     }
     return (
-        <div className="outlin text-white m-4">
+        <div className="outlin text-white m-4 mt-0">
             <div className="px-1 my-1 text-lg font-bold text-white">New Paste</div>
             <textarea ref={props.reference} placeholder="Paste/Enter Here..." className="
             bg-[#363735]  text-white w-full resize-none min-h-[300px] rounded-md
