@@ -21,6 +21,7 @@ export default function PublicLink()
             setLoading(false);
             setAvailable(true);
             setIsPublic(true);
+            document.title=data[0].title + " | CodeShare" ;
             
         }).catch((e)=>{
             if(e.response.status===403)
@@ -52,6 +53,7 @@ export default function PublicLink()
             setLoading(false);
             setAvailable(true);
             setIsPublic(true);
+            document.title=data[0].title;
 
         }).catch(e=>{
             // Password is wrong

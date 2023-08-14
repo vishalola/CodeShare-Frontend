@@ -5,6 +5,7 @@ import { useRef } from "react"
 export default function Home()
 {
     const code=useRef(null);
+    document.title="CodeShare";
     return (
         <div>
         <CodeInput reference={code}/>
