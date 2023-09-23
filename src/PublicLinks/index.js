@@ -14,7 +14,7 @@ export default function PublicLink()
     const pass=useRef(null);
     useEffect(()=>{
         let link=param.link;
-        axios.get(`https://codeshare-d6ar.onrender.com/${link}`).then((res)=>{
+        axios.get(`https://yjhsb26gzw.ap-southeast-1.awsapprunner.com/${link}`).then((res)=>{
             let data=res.data;
             setCode(data[0].code);
             setTitle(data[0].title);
@@ -46,7 +46,7 @@ export default function PublicLink()
         let passwrd=pass.current.value;
         let link=param.link;
         setLoading(true);
-        axios.get(`https://codeshare-d6ar.onrender.com/${link}`,{params:{"password":passwrd}}).then((res)=>{
+        axios.get(`https://yjhsb26gzw.ap-southeast-1.awsapprunner.com/${link}`,{params:{"password":passwrd}}).then((res)=>{
             let data=res.data;
             setCode(data[0].code);
             setTitle(data[0].title);
