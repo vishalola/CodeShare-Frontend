@@ -6,7 +6,7 @@ export default function PublicPaste(){
     const [items,setItems]=useState([]);
     const [loading,setLoading]=useState(true);
     useEffect(()=>{
-        axios.get(`https://codeshare-d6ar.onrender.com/`).then(res=>{
+        axios.get(`https://yjhsb26gzw.ap-southeast-1.awsapprunner.com/`).then(res=>{
             setLoading(false);
             let data=res.data;
             for(let i=0;i<data.length;i++)
