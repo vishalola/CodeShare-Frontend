@@ -16,7 +16,7 @@ export default function PasteOption(props)
         if(passCheck)
         {
             let data={"title":title,"language":language,"password":password,"isPublic":0,"code":props.code.current.value};
-            axios.post("https://codeshare-d6ar.onrender.com/",data).then((res)=>{
+            axios.post("https://yjhsb26gzw.ap-southeast-1.awsapprunner.com/",data).then((res)=>{
                 let body=res.data;
                 navigate(`/${body.link}`)
             }).catch((e)=>console.log(e))
@@ -24,7 +24,7 @@ export default function PasteOption(props)
         else
         {
             let data={"title":title,"language":language,"isPublic":1,"code":props.code.current.value};
-            axios.post("https://codeshare-d6ar.onrender.com/",data).then((res)=>{
+            axios.post("https://yjhsb26gzw.ap-southeast-1.awsapprunner.com/",data).then((res)=>{
                 let body=res.data;
                 navigate(`/${body.link}`)
             }).catch((e)=>console.log(e))
