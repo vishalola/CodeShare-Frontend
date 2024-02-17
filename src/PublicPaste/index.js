@@ -11,16 +11,21 @@ export default function PublicPaste(){
             let data=res.data;
             for(let i=0;i<data.length;i++)
             {
-                setItems(item=>[...item,<PublicItem link={data[i].link} title={data[i].title} language={data[i].language} date={data[i].createdAt.substring(0,10)}/>])
+                setItems(item=>[...item,<PublicItem key={i} link={data[i].link} title={data[i].title} language={data[i].language} date={data[i].createdAt.substring(0,10)}/>])
             }
         }).catch(e=>console.log(e));
     },[])
     return (
         <div className="text-white border-[.1px] rounded-sm border-[#646464]
-        m-4 p-2 overflow-scroll h-[300px] min-w-[200px] 
-        ">
-            {loading && <Loader/>}
-            {!loading && items}
+        m-4 p-2 h-[300px] min-w-[200px]">
+            <div className="outlin text-xl px-2 py-1 pb-2">
+                Public Archive
+            </div>
+            <div className="overflow-scroll h-[90%]">
+                {loading && <Loader/>}
+                {!loading && items}
+            </div>
         </div>
+
     )
 }

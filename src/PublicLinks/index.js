@@ -1,28 +1,30 @@
 import axios from "axios";
 import { useEffect,useState,useRef } from "react";
 import { useParams } from "react-router"
-import CodeEditor from "../CodeEditor"
+import CodeEditor from "../CodeEditor/newEditor"
 import Loader from "../components/loader"
 export default function PublicLink()
 {
     const [loading,setLoading]=useState(true);
     const [code,setCode]=useState('');
     const [title,setTitle]=useState('');
+    const [language,setLanguage] = useState('javascript');
     const [available,setAvailable]=useState(false);
     const [isPublic,setIsPublic]=useState(false);
     const param=useParams();
     const pass=useRef(null);
+    const editorRef = useRef(null);
     useEffect(()=>{
         let link=param.link;
         axios.get(`https://codeshare-d6ar.onrender.com/${link}`).then((res)=>{
             let data=res.data;
+            setLanguage(data[0].language);
             setCode(data[0].code);
             setTitle(data[0].title);
             setLoading(false);
             setAvailable(true);
             setIsPublic(true);
             document.title=data[0].title + " | CodeShare" ;
-            
         }).catch((e)=>{
             if(e.response.status===403)
             {
@@ -49,6 +51,7 @@ export default function PublicLink()
         axios.get(`https://codeshare-d6ar.onrender.com/${link}`,{params:{"password":passwrd}}).then((res)=>{
             let data=res.data;
             setCode(data[0].code);
+            setLanguage(data[0].language);
             setTitle(data[0].title);
             setLoading(false);
             setAvailable(true);
@@ -76,7 +79,11 @@ export default function PublicLink()
         if(isPublic)
         {
             // Return CodeEditor with the paste that came from Backend
-            return (<CodeEditor code={code} title={title}/>)
+            // return (<CodeEditor code={code} title={title}/>)
+            return (<div className="h-[90vh]">
+                <CodeEditor reference = {editorRef} code={code} language={language} readOnly={true}/>
+            </div>);
+
         }
         else
         {
