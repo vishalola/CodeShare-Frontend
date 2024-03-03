@@ -3,6 +3,8 @@ import { useEffect,useState,useRef } from "react";
 import { useParams } from "react-router"
 import CodeEditor from "../CodeEditor/newEditor"
 import Loader from "../components/loader"
+import NotFound from "../components/notFoundHandle";
+import PassCheck from "../components/passCheck";
 export default function PublicLink()
 {
     const [loading,setLoading]=useState(true);
@@ -16,7 +18,7 @@ export default function PublicLink()
     const editorRef = useRef(null);
     useEffect(()=>{
         let link=param.link;
-        axios.get(`https://codeshare-d6ar.onrender.com/${link}`).then((res)=>{
+        axios.get(`http://localhost:4000/${link}`).then((res)=>{
             let data=res.data;
             setLanguage(data[0].language);
             setCode(data[0].code);
@@ -48,7 +50,7 @@ export default function PublicLink()
         let passwrd=pass.current.value;
         let link=param.link;
         setLoading(true);
-        axios.get(`https://codeshare-d6ar.onrender.com/${link}`,{params:{"password":passwrd}}).then((res)=>{
+        axios.get(`http://localhost:4000/${link}`,{params:{"password":passwrd}}).then((res)=>{
             let data=res.data;
             setCode(data[0].code);
             setLanguage(data[0].language);
@@ -68,9 +70,7 @@ export default function PublicLink()
     if(loading)
     {
         return (
-            <div className="rounded-sm mt-10 m-4 p-3 px-6 w-fit ml-auto mr-auto bg-[#363735]">
                 <Loader/>
-            </div>
         )
     }
     if(available)
@@ -89,22 +89,7 @@ export default function PublicLink()
         {
             // Here return a component that would take password.
            return (
-            <div className="rounded-sm mt-10 m-4 p-6 px-10 w-fit ml-auto mr-auto bg-[#363735]">
-                <div className="text-xl font-bold">Password Protected </div>
-                <form className="text-sm mt-2">
-                    <div>
-                    <label className="outlin w-[70px] inline-block text-sm">
-                            Password
-                        </label>
-                        <input ref={pass} className="rounded-sm text-sm py-2 px-2 bg-inherit outline-none border-[.1px] border-[#646464]" required type="password"/>
-                    </div>
-                    <div className="flex justify-end mt-2">
-                        <button type="submit" className="font-bold bg-green-600 rounded-sm text-sm py-2 px-2 outline-none" onClick={handleSubmit}>
-                                Unlock
-                        </button>
-                    </div>
-                </form>
-            </div>
+                <PassCheck passRef={pass} handleSubmit={handleSubmit}/>
            )
         }
     }
@@ -112,12 +97,7 @@ export default function PublicLink()
     {
         // Code for link not available
         return (
-            <div className="rounded-sm mt-10 m-4 p-3 px-6 w-fit ml-auto mr-auto bg-[#363735] md:ml-4 md:mr-4">
-                <div className="text-xl font-bold">404 Not Found</div>
-                <div className="text-sm mt-2">
-                This page is no longer available. Either the link is invalid or the paste has been removed by the creator.
-                </div>
-            </div>
+            <NotFound/>
         )
     }
 }

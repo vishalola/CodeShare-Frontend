@@ -10,30 +10,11 @@ export default function PasteOption(props)
     const [langList,setlangList] = useState([]);
     let handleSubmit=(e)=>{
         e.preventDefault();
-        let title=e.target[0].value;
-        let language=e.target[1].value;
-        let password=e.target[2].value;
-        let passCheck=e.target[3].checked;
-        if(passCheck)
-        {
-            let data={"title":title,"language":language,"password":password,"isPublic":0,"code":props.code.current.getValue()};
-            axios.post("https://codeshare-d6ar.onrender.com/",data).then((res)=>{
-                let body=res.data;
-                navigate(`/${body.link}`)
-            }).catch((e)=>console.log(e))
-        }
-        else
-        {
-            let data={"title":title,"language":language,"isPublic":1,"code":props.code.current.getValue()};
-            axios.post("https://codeshare-d6ar.onrender.com/",data).then((res)=>{
-                let body=res.data;
-                navigate(`/${body.link}`)
-            }).catch((e)=>console.log(e))
-        }
+        props.postFunc(e);
     }
     let handleLanguageChange = (event)=>{
         // console.log(event.target.value);
-        if(event.target.value)
+        if(event.target.value && props.setLanguage)
             props.setLanguage(event.target.value)
     }
     useEffect(() => {

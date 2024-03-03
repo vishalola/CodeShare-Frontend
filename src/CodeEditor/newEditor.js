@@ -13,9 +13,6 @@ export default function TextEditor(props){
         // monaco.editor.defineTheme("monokai-bright").then(_ => monaco.editor.setMonacoTheme("monokai-bright"));
         }
     }, [monaco,mounted]);
-    // let handleChange = (value,event)=>{
-    //     console.log(value);
-    // }
     useEffect(()=>{
         if(props.language)
         {
@@ -25,6 +22,8 @@ export default function TextEditor(props){
     let handleMount = (editor,monaco)=>{
         props.reference.current = editor;
         setMounted(true);
+        if(props.setMounted)
+            props.setMounted(true);
     }
     let handleLangChange = (language)=>{
         if(monaco && props.reference.current)
@@ -38,7 +37,7 @@ export default function TextEditor(props){
             <Editor
             className="" 
             defaultLanguage="javascript"
-            value={props.readOnly?props.code:""}
+            value={props.code}
             onMount={handleMount}
             // onChange={handleChange}
             options={{
@@ -50,5 +49,6 @@ export default function TextEditor(props){
 }
 TextEditor.defaultProps= {
     readOnly:false,
+    code:"",
     language:"javascript"
 }

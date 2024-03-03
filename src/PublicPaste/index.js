@@ -6,7 +6,7 @@ export default function PublicPaste(){
     const [items,setItems]=useState([]);
     const [loading,setLoading]=useState(true);
     useEffect(()=>{
-        axios.get(`https://codeshare-d6ar.onrender.com/`).then(res=>{
+        axios.get(`http://localhost:4000/`).then(res=>{
             setLoading(false);
             let data=res.data;
             for(let i=0;i<data.length;i++)
@@ -16,7 +16,7 @@ export default function PublicPaste(){
         }).catch(e=>console.log(e));
     },[])
     return (
-        <div className="text-white border-[.1px] rounded-sm border-[#646464]
+        <div className="text-white border-[0.1px] rounded-sm border-[#646464]
         m-4 p-2 h-[300px] min-w-[200px]">
             <div className="outlin text-xl px-2 py-1 pb-2">
                 Public Archive
