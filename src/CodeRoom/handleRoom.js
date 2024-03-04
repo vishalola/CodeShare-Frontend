@@ -75,6 +75,7 @@ export default function HandleRoom(){
             password:password
         };
         return new Promise((resolve)=>{
+            console.log(API);
             axios.put(`${API}/rooms/${param.roomID}`,data).then(res=>{
                 // data saved successfully;
                 resolve(true);
