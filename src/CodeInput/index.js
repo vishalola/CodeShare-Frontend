@@ -1,9 +1,9 @@
 import TextEditor from "../CodeEditor/newEditor"
 
 export default function CodeInput(props){
-    let heightAdjust=(e)=>{
-        e.target.style.height=`${e.target.scrollHeight}px`
-    }
+    // let heightAdjust=(e)=>{
+    //     e.target.style.height=`${e.target.scrollHeight}px`
+    // }
     return (
         <div className="outlin h-[40vh] text-white mx-4 mt-5">
             {/* <div className="px-1 my-1 text-lg font-bold text-white">New Paste</div> */}

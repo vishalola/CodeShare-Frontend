@@ -16,9 +16,10 @@ export default function PublicLink()
     const param=useParams();
     const pass=useRef(null);
     const editorRef = useRef(null);
+    const API = process.env.REACT_APP_serverAPI;
     useEffect(()=>{
         let link=param.link;
-        axios.get(`http://localhost:4000/${link}`).then((res)=>{
+        axios.get(`${API}/${link}`).then((res)=>{
             let data=res.data;
             setLanguage(data[0].language);
             setCode(data[0].code);
@@ -50,7 +51,7 @@ export default function PublicLink()
         let passwrd=pass.current.value;
         let link=param.link;
         setLoading(true);
-        axios.get(`http://localhost:4000/${link}`,{params:{"password":passwrd}}).then((res)=>{
+        axios.get(`${API}/${link}`,{params:{"password":passwrd}}).then((res)=>{
             let data=res.data;
             setCode(data[0].code);
             setLanguage(data[0].language);

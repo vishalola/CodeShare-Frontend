@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 export default function CreateRoom()
 {
     const navigate = useNavigate();
+    const API = process.env.REACT_APP_serverAPI;
     let roomPost = (e)=>{
             let title=e.target[0].value;
             let language=e.target[1].value;
@@ -11,7 +12,7 @@ export default function CreateRoom()
             let passCheck=e.target[3].checked;
             let data={"title":title,"language":language,"password":password,"isPublic":(passCheck?0:1),"code":" "};
             
-            axios.post("http://localhost:4000/rooms/",data).then((res)=>{
+            axios.post(`${API}/rooms/`,data).then((res)=>{
                 let body=res.data;
                 navigate(`/rooms/${body.link}`)
             }).catch((e)=>console.log(e))

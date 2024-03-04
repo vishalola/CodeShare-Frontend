@@ -6,6 +6,7 @@ import Loader from "../components/loader";
 import CodeRoom from './index.js';
 import PassCheck from "../components/passCheck";
 import { useRef } from "react";
+
 export default function HandleRoom(){
     const param = useParams();
     const [notFound,setNotFound] = useState(false);
@@ -14,17 +15,21 @@ export default function HandleRoom(){
     const [roomID,setRoomID] = useState(null);
     const [title,setTitle] = useState('');
     const [codeData,setCodeData] = useState('');
+    const [codeChanges,setCodeChanges] = useState('');
     const [roomLang,setRoomLang] = useState('');
     const [password,setPassword] = useState('');
     const [publicCheck,setPublicCheck] = useState(true);
     const passwordRef = useRef(null);
+
+    const API = process.env.REACT_APP_serverAPI;
+
     useEffect(()=>{
         let roomID  = param.roomID;
         // send this to server to check;
         setNotFound(false);
         setLoading(true);
         setRoomID('');
-        axios.get(`http://localhost:4000/rooms/${roomID}`).then(res=>{
+        axios.get(`${API}/rooms/${roomID}`).then(res=>{
             
             let body = res.data;
             console.log(body[0]);
@@ -58,19 +63,19 @@ export default function HandleRoom(){
                 console.log(e);
             }
         })
-    },[])
+    },[param.roomID])
 
     const handleSave = async()=>{
         // upload code here;
         let data={
             title:title,
-            code:codeData,
+            code:codeChanges,
             language:roomLang,
             isPublic:publicCheck,
             password:password
         };
         return new Promise((resolve)=>{
-            axios.put(`http://localhost:4000/rooms/${param.roomID}`,data).then(res=>{
+            axios.put(`${API}/rooms/${param.roomID}`,data).then(res=>{
                 // data saved successfully;
                 resolve(true);
             }).catch(error=>{
@@ -87,7 +92,7 @@ export default function HandleRoom(){
         setLoading(true);
         setProtected(false);
         setPassword('');
-        axios.get(`http://localhost:4000/rooms/${roomID}`,{params:{"password":passwrd}}).then((res)=>{
+        axios.get(`${API}/rooms/${roomID}`,{params:{"password":passwrd}}).then((res)=>{
             let data=res.data;
             console.log(data[0]);
             setRoomID(data[0]._id);
@@ -112,7 +117,7 @@ export default function HandleRoom(){
             {loading && <Loader/>}
             {notFound && <NotFound/>}
             {passProtected && <PassCheck passRef={passwordRef} handleSubmit = {handleCheck}/>}
-            {!loading && !notFound && !passProtected && <CodeRoom setCodeData={setCodeData}  uploadChange={handleSave} id={roomID} data={codeData} lang = {roomLang}/>}
+            {!loading && !notFound && !passProtected && <CodeRoom setCodeChanges={setCodeChanges}  uploadChange={handleSave} id={roomID} data={codeData} lang = {roomLang}/>}
         </>
     )
 }

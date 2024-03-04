@@ -1,10 +1,7 @@
 import { useRef,useEffect,useState } from "react"
-import axios from "axios";
-import { useNavigate } from "react-router";
 import langData from '../CodeEditor/langData.json';
 export default function PasteOption(props)
 {
-    const navigate=useNavigate();
     const passCheck=useRef(null);
     const passLabel=useRef(null);
     const [langList,setlangList] = useState([]);
@@ -19,33 +16,33 @@ export default function PasteOption(props)
     }
     useEffect(() => {
         langData.forEach(lang=>{
-            setlangList(list=>[...list,<option key={list.length} value={lang.id}>{lang.name}</option>])
+            setlangList(list=>[...list,<option className="bg-[#272822]" key={list.length} value={lang.id}>{lang.name}</option>])
         })
     }, [])
     
     return (
         <div className="outlin m-4 flex lg:w-fit justify-center items-center border-[.1px] rounded-sm border-[#646464] text-white">
-            <form className="outlin my-3 flex flex-col" onSubmit={handleSubmit}>
+            <form className="outlin md:text-xs text-sm my-3 flex flex-col" onSubmit={handleSubmit}>
             {/* <div className="outlin px-4 my-2 text-2xl">Options</div> */}
                 <div className="outlin m-3">
-                        <label className="outlin w-[70px] inline-block mx-2 text-sm">
+                        <label className="outlin w-[70px] inline-block mx-2 ">
                             Title
                         </label>
-                        <input className="w-[160px] rounded-sm text-sm py-2 px-2 bg-inherit outline-none border-[.1px] border-[#646464]" required type="text" name="title"/>
+                        <input className="w-[160px] md:w-[120px] rounded-sm py-2 px-2 bg-inherit outline-none border-[.1px] border-[#646464]" required type="text" name="title"/>
                 </div>
                 <div className="m-3">
-                        <label className="w-[70px] inline-block mx-2 text-sm">
+                        <label className="w-[70px] inline-block mx-2">
                             Language
                         </label>
-                        <select onChange={handleLanguageChange} className="w-[160px] rounded-sm text-sm py-2 px-2 bg-inherit outline-none border-[.1px] border-[#646464]" name="language">
+                        <select onChange={handleLanguageChange} className="w-[160px] md:w-[120px] rounded-sm py-2 px-2 bg-inherit outline-none border-[.1px] border-[#646464]" name="language">
                             {langList}
                         </select>
                 </div>
                 <div className="m-3 w-fit flex justify-center items-center outlin ">
-                        <label className="w-[70px] inline-block mx-2 text-sm">
+                        <label className="w-[70px] inline-block mx-2">
                             Password
                         </label>
-                        <input ref={passCheck} disabled className="w-[160px] cursor-not-allowed rounded-sm text-sm py-2 px-2 outline-none border-[.1px] border-[#646464]" required type="password" name="title"/>
+                        <input ref={passCheck} disabled className="w-[160px] md:w-[120px] cursor-not-allowed rounded-sm py-2 px-2 outline-none border-[.1px] border-[#646464]" required type="password" name="title"/>
                         <input type="checkbox" className="h-[15px] w-[15px] outlin mx-2  bg-black" name="passwordcheck"
                         onChange={(e)=>{
                             if(e.target.checked)
@@ -66,14 +63,13 @@ export default function PasteOption(props)
                             }
                         }} 
                         />
-                        <label ref={passLabel} className="text-sm w-[60px]" >
+                        <label ref={passLabel} className="w-[60px]" >
                             Disabled
                         </label>
                 </div>
                 <div className="outlin items-center  m-3">
-                        <label className="outlin w-[70px] inline-block mx-2 text-sm">
-                        </label>
-                        <button className="font-bold w-[160px] bg-green-600 rounded-sm text-sm py-2 px-2 outline-none" type="submit">
+                        <label className="outlin w-[70px] inline-block mx-2 text-sm"/>
+                        <button className="font-bold w-[160px] md:w-[120px] bg-green-600 rounded-sm py-2 px-2 outline-none" type="submit">
                             Get Link
                         </button>
                 </div>

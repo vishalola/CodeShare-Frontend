@@ -5,8 +5,9 @@ import Loader from '../components/loader'
 export default function PublicPaste(){
     const [items,setItems]=useState([]);
     const [loading,setLoading]=useState(true);
+    const API = process.env.REACT_APP_serverAPI;
     useEffect(()=>{
-        axios.get(`http://localhost:4000/`).then(res=>{
+        axios.get(`${API}/`).then(res=>{
             setLoading(false);
             let data=res.data;
             for(let i=0;i<data.length;i++)

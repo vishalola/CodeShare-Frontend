@@ -2,7 +2,7 @@ import {io} from 'socket.io-client';
 import { useRef,useEffect,useState } from 'react';
 import TextEditor from '../CodeEditor/newEditor';
 import { RiSaveFill } from "react-icons/ri";
-import Loader from '../components/loader';
+// import Loader from '../components/loader';
 export default function CodeRoom(props){
 
     const [editorMounted,setEditorMount] = useState(false);
@@ -10,27 +10,28 @@ export default function CodeRoom(props){
     const [saving,setSaving]  = useState(false);
     const editorRef = useRef(null);
     const [roomID,setRoomID] = useState(props.id);
+    const API = process.env.REACT_APP_serverAPI;
+
    useEffect(()=>{
-    const  newsocket = io('http://localhost:4000');
+    const  newsocket = io(`${API}`);
     setSocket(newsocket);
 
     newsocket.on('code-update', (updatedCode) => {
         editorRef.current.setValue(updatedCode);
-        props.setCodeData(updatedCode);
+        props.setCodeChanges(updatedCode);
       }); 
     return ()=> newsocket.close();
-   },[])
+   },[props])
     useEffect(()=>{
         if(editorRef.current && editorMounted)
         {
             editorRef.current.onKeyUp((e)=>{
                 const newCode = editorRef.current.getValue();
-                props.setCodeData(newCode);
                 socket.emit('code-change',roomID, newCode);
-
+                props.setCodeChanges(newCode);
             })
         }
-    },[editorMounted])
+    },[editorMounted,props,roomID,socket])
     useEffect(()=>{
         setRoomID(props.id);
         if(socket && props.id)
