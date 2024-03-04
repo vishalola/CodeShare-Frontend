@@ -10,7 +10,7 @@ export default function CreateRoom()
             let language=e.target[1].value;
             let password=e.target[2].value || "";
             let passCheck=e.target[3].checked;
-            console.log(passCheck);
+            // console.log(passCheck);
             let data={"title":title,"language":language,"password":password,"isPublic":(passCheck?false:true),"code":" "};
             
             axios.post(`${API}/rooms/`,data).then((res)=>{

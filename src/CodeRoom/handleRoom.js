@@ -32,7 +32,7 @@ export default function HandleRoom(){
         axios.get(`${API}/rooms/${roomID}`).then(res=>{
             
             let body = res.data;
-            console.log(body[0]);
+            // console.log(body[0]);
             setRoomID(body[0]._id);
             setCodeData(body[0].code);
             setTitle(body[0].title);
@@ -75,7 +75,6 @@ export default function HandleRoom(){
             password:password
         };
         return new Promise((resolve)=>{
-            console.log(API);
             axios.put(`${API}/rooms/${param.roomID}`,data).then(res=>{
                 // data saved successfully;
                 resolve(true);
@@ -95,7 +94,7 @@ export default function HandleRoom(){
         setPassword('');
         axios.get(`${API}/rooms/${roomID}`,{params:{"password":passwrd}}).then((res)=>{
             let data=res.data;
-            console.log(data[0]);
+            // console.log(data[0]);
             setRoomID(data[0]._id);
             setCodeData(data[0].code);
             setRoomLang(data[0].language);

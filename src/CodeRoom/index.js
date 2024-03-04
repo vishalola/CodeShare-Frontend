@@ -21,7 +21,7 @@ export default function CodeRoom(props){
         props.setCodeChanges(updatedCode);
       }); 
     return ()=> newsocket.close();
-   },[props])
+   },[])
     useEffect(()=>{
         if(editorRef.current && editorMounted)
         {
@@ -31,7 +31,7 @@ export default function CodeRoom(props){
                 props.setCodeChanges(newCode);
             })
         }
-    },[editorMounted,props,roomID,socket])
+    },[editorMounted])
     useEffect(()=>{
         setRoomID(props.id);
         if(socket && props.id)
