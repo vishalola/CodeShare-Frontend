@@ -10,6 +10,19 @@ export default function PublicPaste(){
         axios.get(`${API}/`).then(res=>{
             setLoading(false);
             let data=res.data;
+            data.sort((a,b)=>{
+                if(a.createdAt>b.createdAt)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 1;
+
+                }
+            });
+            console.log(data);
+
             for(let i=0;i<data.length;i++)
             {
                 setItems(item=>[...item,<PublicItem key={i} link={data[i].link} title={data[i].title} language={data[i].language} date={data[i].createdAt.substring(0,10)}/>])
