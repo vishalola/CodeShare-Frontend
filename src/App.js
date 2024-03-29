@@ -5,6 +5,7 @@ import {Routes,Route} from 'react-router'
 import Navbar from './components/navbar';
 import CreateRoom from './CodeRoom/createRoom';
 import HandleRoom from './CodeRoom/handleRoom';
+import CodeRoom from './CodeRoom';
 function App() {
   
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/:link" element={<PublicLink/>}/>
       <Route path="/newRoom" element={<CreateRoom/>}/>
       <Route path="/rooms/:roomID" element={<HandleRoom/>}/>
+      <Route path='/dev' element={<CodeRoom/>}/>
     </Routes>
     {/* <CodeRoom/> */}
     </>

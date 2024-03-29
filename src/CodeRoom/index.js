@@ -2,6 +2,7 @@ import {io} from 'socket.io-client';
 import { useRef,useEffect,useState } from 'react';
 import TextEditor from '../CodeEditor/newEditor';
 import { RiSaveFill } from "react-icons/ri";
+import Participants from './participants';
 // import Loader from '../components/loader';
 export default function CodeRoom(props){
 
@@ -61,6 +62,9 @@ export default function CodeRoom(props){
                         </div>}
                     {!saving && <RiSaveFill/>}
                 </div>
+            </div>
+            <div className='absolute right-0 bottom-0'>
+                <Participants/>
             </div>
         </div>
     )
