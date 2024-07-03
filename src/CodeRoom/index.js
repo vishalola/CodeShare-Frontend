@@ -17,7 +17,8 @@ export default function CodeRoom(props){
     const [roomID,setRoomID] = useState(props.id);
     const [participantsData,setParticipantsData] = useState([]);
     const API = process.env.REACT_APP_serverAPI;
-
+    const timerRef = useRef(null);
+    const TIMER_TIMEOUT = 2000; // 5 seconds;
    useEffect(()=>{
     const  newsocket = io(`${API}`);
     setSocket(newsocket);
@@ -32,18 +33,35 @@ export default function CodeRoom(props){
         setParticipantsData(updatedParticipantsList);
         // console.log(updatedParticipantsList);
     }) 
+    newsocket.on('lock-freed',()=>{
+        setLocked(false);
+    })
+    newsocket.on('lock-acquired',()=>{
+        setLocked(true);
+    })
     return ()=> newsocket.close();
    },[])
     useEffect(()=>{
         if(editorRef.current && editorMounted)
         {
             editorRef.current.onKeyUp((e)=>{
-                const newCode = editorRef.current.getValue();
-                socket.emit('code-change',roomID, newCode);
-                props.setCodeChanges(newCode);
+                if(editorRef.current.getRawOptions().readOnly===false)
+                {
+                    // emit here that lock is acquired
+                    console.log(editorLocked);
+                    socket.emit('lock-acquired',roomID);
+                    const newCode = editorRef.current.getValue();
+                    socket.emit('code-change',roomID, newCode);
+                    props.setCodeChanges(newCode);
+
+                    // here start a countdown to free the lock 
+                    clearTimeout(timerRef.current);
+                    timerRef.current = setTimeout(freeLock, TIMER_TIMEOUT);
+                }
+                
             })
         }
-    },[editorMounted])
+    },[editorMounted, editorLocked, roomID, socket, props])
     useEffect(()=>{
         setRoomID(props.id);
         if(socket && props.id && userName)
@@ -67,6 +85,12 @@ export default function CodeRoom(props){
             setUserName(nameRef.current.value.trim());
         }
 
+    }
+    const freeLock = ()=>{
+        socket.emit('lock-freed',roomID);
+
+        // auto-saved
+        saveChange();
     }
     return (
         <div className='h-[90vh]'>

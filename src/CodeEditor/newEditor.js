@@ -42,7 +42,6 @@ export default function TextEditor(props){
             defaultLanguage="javascript"
             value={props.code}
             onMount={handleMount}
-            // onChange={handleChange}
             options={{
                 readOnly:props.readOnly || props.editorLocked
             }}
