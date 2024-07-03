@@ -24,6 +24,9 @@ export default function TextEditor(props){
         setMounted(true);
         if(props.setMounted)
             props.setMounted(true);
+        // editor.onDidAttemptReadOnlyEdit(() => {
+        //     alert("Custom error message: This editor is in read-only mode.");
+        //     });
     }
     let handleLangChange = (language)=>{
         if(monaco && props.reference.current)
@@ -33,7 +36,7 @@ export default function TextEditor(props){
         }
     }
     return(
-        <div className={`h-full py-2 ${props.readOnly?'':'outline'} outline-[#ffffff33] rounded-lg overflow-clip`}>
+        <div className={`relative h-full py-2 ${props.readOnly?'':'outline'} outline-[#ffffff33] rounded-lg overflow-clip`}>
             <Editor
             className="" 
             defaultLanguage="javascript"
@@ -41,9 +44,13 @@ export default function TextEditor(props){
             onMount={handleMount}
             // onChange={handleChange}
             options={{
-                readOnly:props.readOnly
+                readOnly:props.readOnly || props.editorLocked
             }}
             />
+            { props.editorLocked && 
+            <div className="absolute z-10 top-0 right-10 py-3 px-4 border-b-2 border-green-500 backdrop-blur-md rounded-sm">
+                Someone else is typing...
+            </div>}
         </div>
     )
 }

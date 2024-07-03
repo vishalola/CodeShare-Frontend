@@ -3,14 +3,19 @@ import { useRef,useEffect,useState } from 'react';
 import TextEditor from '../CodeEditor/newEditor';
 import { RiSaveFill } from "react-icons/ri";
 import Participants from './participants';
+import EnterName from '../components/enterName';
 // import Loader from '../components/loader';
 export default function CodeRoom(props){
 
     const [editorMounted,setEditorMount] = useState(false);
+    const [editorLocked,setLocked] = useState(false);
+    const [userName,setUserName] = useState(null);
+    const nameRef = useRef(null);
     const [socket,setSocket] = useState(null);
     const [saving,setSaving]  = useState(false);
     const editorRef = useRef(null);
     const [roomID,setRoomID] = useState(props.id);
+    const [participantsData,setParticipantsData] = useState([]);
     const API = process.env.REACT_APP_serverAPI;
 
    useEffect(()=>{
@@ -19,8 +24,14 @@ export default function CodeRoom(props){
 
     newsocket.on('code-update', (updatedCode) => {
         editorRef.current.setValue(updatedCode);
+        // editorRef.current.updateOptions({ readOnly: true });
+        // setLocked(true);
         props.setCodeChanges(updatedCode);
-      }); 
+      });
+    newsocket.on('participants-update',(updatedParticipantsList)=>{
+        setParticipantsData(updatedParticipantsList);
+        // console.log(updatedParticipantsList);
+    }) 
     return ()=> newsocket.close();
    },[])
     useEffect(()=>{
@@ -35,11 +46,11 @@ export default function CodeRoom(props){
     },[editorMounted])
     useEffect(()=>{
         setRoomID(props.id);
-        if(socket && props.id)
+        if(socket && props.id && userName)
         {
-            socket.emit('joinRoom',props.id);
+            socket.emit('joinRoom',props.id,userName);
         }
-    },[socket,props.id])
+    },[socket,props.id,userName])
 
     const saveChange = async ()=>{
         
@@ -47,9 +58,19 @@ export default function CodeRoom(props){
         await props.uploadChange();
         setSaving(false);
     }
+    const handleName = (e)=>{
+        e.preventDefault();
+        if(nameRef.current)
+        {
+            if(nameRef.current.value.trim()==='')
+            return;
+            setUserName(nameRef.current.value.trim());
+        }
+
+    }
     return (
         <div className='h-[90vh]'>
-            <TextEditor setMounted={setEditorMount} reference = {editorRef} language={props.lang} code={props.data}/>
+            <TextEditor setMounted={setEditorMount} reference = {editorRef} language={props.lang} code={props.data} editorLocked={editorLocked}/>
             <div className='flex relative justify-center items-center'>
                 <div onClick={saveChange} className='rounded-[100%] transition-all hover:bg-green-700 cursor-pointer  p-4 bg-green-600 text-white absolute text-4xl'>
                     {saving && 
@@ -63,8 +84,11 @@ export default function CodeRoom(props){
                     {!saving && <RiSaveFill/>}
                 </div>
             </div>
+           {!userName &&  <div className='absolute top-0 h-full w-full backdrop-blur-sm z-10 flex justify-center items-center'>
+                <EnterName nameRef={nameRef} handleSubmit={handleName}/>
+            </div>}
             <div className='absolute right-0 bottom-0'>
-                <Participants/>
+                <Participants participantsData={participantsData}/>
             </div>
         </div>
     )
