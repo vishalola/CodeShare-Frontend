@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
+import ServerStatus from './serverStatus';
+
 export default function Navbar(){
     const navigate=useNavigate();
     const location = useLocation();
@@ -23,8 +25,10 @@ export default function Navbar(){
             <div className="cursor-pointer w-fit " onClick={()=>{
                 navigate('/');
             }}>
+
                 Code<div className="inline text-green-600 ">{inRoom?"Room":"Share"}</div>
             </div>
+            <ServerStatus/>
         </div>
     )
 }
