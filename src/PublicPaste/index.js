@@ -31,12 +31,16 @@ export default function PublicPaste(){
     },[])
     return (
         <div className="text-white border-[0.1px] rounded-sm border-[#646464]
-        m-4 p-2 h-[300px] min-w-[200px]">
+        m-4 p-2 h-[300px] min-w-[200px] flex flex-col">
             <div className="outlin text-xl px-2 py-1 pb-2">
                 Public Archive
             </div>
-            <div className="overflow-scroll h-[90%]">
-                {loading && <Loader/>}
+            <div className="overflow-scroll h-full">
+                {loading && 
+                    <div className="h-full flex justify-center items-center">
+                        <Loader/>
+                    </div>
+                }
                 {!loading && items}
             </div>
         </div>
