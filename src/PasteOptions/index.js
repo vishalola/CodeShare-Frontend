@@ -1,11 +1,14 @@
 import { useRef,useEffect,useState } from "react"
 import langData from '../CodeEditor/langData.json';
+import Loader from "../components/loader";
 export default function PasteOption(props)
 {
     const passCheck=useRef(null);
     const passLabel=useRef(null);
     const [langList,setlangList] = useState([]);
+    const [loading,setLoading] = useState(false);
     let handleSubmit=(e)=>{
+        setLoading(true);
         e.preventDefault();
         props.postFunc(e);
     }
@@ -15,6 +18,7 @@ export default function PasteOption(props)
             props.setLanguage(event.target.value)
     }
     useEffect(() => {
+        setLoading(false);
         langData.forEach(lang=>{
             setlangList(list=>[...list,<option className="bg-[#272822]" key={list.length} value={lang.id}>{lang.name}</option>])
         })
@@ -70,7 +74,8 @@ export default function PasteOption(props)
                 <div className="outlin items-center  m-3">
                         <label className="outlin w-[70px] inline-block mx-2 text-sm"/>
                         <button className="font-bold w-[160px] md:w-[120px] bg-green-600 rounded-sm py-2 px-2 outline-none" type="submit">
-                            Get Link
+                            {loading && "Creating Link..."}
+                            {!loading && "Get Link"}
                         </button>
                 </div>
             </form>
