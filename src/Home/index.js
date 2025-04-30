@@ -37,7 +37,7 @@ export default function Home() {
         }
   }
   return (
-    <div>
+    <div className="flex-1 flex flex-col justify-between outline">
       <CodeInput language = {language} reference={code} />
       <div className='lg:flex-row mt-10 flex flex-col'>
         <PasteOption languages = {langData} setLanguage={setLanguage} postFunc = {pastePost} />

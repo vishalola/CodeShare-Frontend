@@ -24,10 +24,18 @@ export default function CodeRoom(props){
     setSocket(newsocket);
 
     newsocket.on('code-update', (updatedCode) => {
-        editorRef.current.setValue(updatedCode);
-        // editorRef.current.updateOptions({ readOnly: true });
-        // setLocked(true);
-        props.setCodeChanges(updatedCode);
+        const editor = editorRef.current;
+        const model = editor.getModel();
+
+        if (model.getValue() !== updatedCode) {
+            const currentSelection = editor.getSelection(); // Save cursor/selection
+            model.pushEditOperations(
+                [], 
+                [{ range: model.getFullModelRange(), text: updatedCode }],
+                () => [currentSelection] // Restore cursor
+            );
+            props.setCodeChanges(updatedCode);
+        }
       });
     newsocket.on('participants-update',(updatedParticipantsList)=>{
         setParticipantsData(updatedParticipantsList);

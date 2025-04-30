@@ -7,14 +7,20 @@ export default function Navbar(){
     const navigate=useNavigate();
     const location = useLocation();
     const [inRoom,setInRoom] = useState(false);
+    const [inCompiler,setInCompiler] = useState(false);
     useEffect(()=>{
         if(location.pathname==='/newRoom' || location.pathname.includes('rooms'))
         {
             setInRoom(true);
         }
+        else if(location.pathname==='/compile' || location.pathname.includes('compile'))
+        {
+            setInCompiler(true);
+        }
         else
         {
             setInRoom(false);
+            setInCompiler(false);
         }
     },[location])
     return (
@@ -26,7 +32,7 @@ export default function Navbar(){
                 navigate('/');
             }}>
 
-                Code<div className="inline text-green-600 ">{inRoom?"Room":"Share"}</div>
+                Code<div className="inline text-green-600 ">{inRoom?"Room":inCompiler?"Compile":"Share"}</div>
             </div>
             <ServerStatus/>
         </div>

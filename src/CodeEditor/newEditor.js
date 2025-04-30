@@ -18,6 +18,7 @@ export default function TextEditor(props){
         {
             handleLangChange(props.language);
         }
+         // eslint-disable-next-line 
     },[props.language,mounted])
     let handleMount = (editor,monaco)=>{
         props.reference.current = editor;
@@ -36,12 +37,19 @@ export default function TextEditor(props){
         }
     }
     return(
-        <div className={`relative h-full py-2 ${props.readOnly?'':'outline'} outline-[#ffffff33] rounded-lg overflow-clip`}>
+        <div className={`relative h-full w-full ${props.readOnly || props.tabbed?'':'border'} border-[#3d3d31] ${props.tabbed?'border-r border-t':'rounded-lg'} overflow-clip`}>
+{       props.tabbed &&  
+            <div className="flex">
+                <div className="rounded-br-lg w-[62px]"></div>
+                <div className=" bg-[#3d3d31] w-fit py-1 px-3">
+                    {props.tabName || "code.cpp"}
+                </div>
+            </div>}
             <Editor
             className="" 
             defaultLanguage="javascript"
             value={props.code}
-            onMount={handleMount}
+            onMount={handleMount}         
             options={{
                 readOnly:props.readOnly || props.editorLocked
             }}

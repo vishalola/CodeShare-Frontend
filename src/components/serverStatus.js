@@ -7,7 +7,7 @@ export default function ServerStatus(){
 
     useEffect(()=>{
         setServerOnline(false);
-        axios.get(`${API}/`).then(res=>{
+        axios.get(`${API}/housekeeping/ping`).then(res=>{
             setServerOnline(true);
         })
     },[])
